@@ -1,0 +1,18 @@
+<% bulletin_board_systems.each do |bbs| %>
+  <h2 class="thread-title"><%= bbs.title %></h2><br>
+  <% bbs.comments.each_with_index do |comment,i| %>
+    <h3><%= i + 1 %>
+    名前：<%= bbs.user.user_name %>
+    <%= comment.updated_at.strftime("%Y/%m/%d %H:%M") %></h3><br>
+    <p class="comment-body"><%= comment.body %></p><br>
+  <% end %>
+
+  <%= form_for comment do |f| %>
+    <%= f.text_area :body %>
+    <%= f.hidden_field :bulletin_board_system_id, value: bbs.id %>
+    <%= f.submit "書き込む" %>
+  <% end %>
+
+<% end %>
+
+<%= render "bulletin_board_systems/new",bbs: bbs, category: category %>

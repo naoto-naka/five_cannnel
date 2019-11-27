@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <h2>新規スレッド作成</h2>
+  <%= form_for bbs do |f| %>
+
+    <%= f.label :title, "スレッドタイトル：" %>
+    <%= f.text_field :title %><br>
+
+    <%= f.collection_check_boxes :category_ids, Category.all, :id, :name  %><br>
+
+    <%= f.fields_for :comments do |c| %>
+      <%= c.text_area :body, size: "45x5" %><br>
+      <%= c.hidden_field :user_id, value: current_user.id %>
+    <% end %>
+
+    <%= f.submit "新規スレッド作成" %>
+
+  <% end %>
+<% end %>

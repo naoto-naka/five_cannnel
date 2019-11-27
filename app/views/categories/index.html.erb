@@ -1,0 +1,19 @@
+<h1>FiveCannel</h1>
+
+<h2>ジャンル一覧</h2><br>
+<% @categories.each do |category| %>
+  <%= link_to category.name, category_path(category.id) %><br>
+<% end %>
+
+<% if @results.any? %>
+  <h2>スレッド一覧</h2><br>
+  <%= search_form_for @q,url: root_path do |f| %>
+    <%= f.search_field :title_cont %>
+    <%= f.submit "検索" %>
+  <% end %>
+  <% @results.each do |result| %>
+    <% result.categories.each do |category| %>
+      <%= link_to result.title + "(#{category.name})" ,category_path(category.id) %><br>
+    <% end %>
+  <% end %>
+<% end %>
